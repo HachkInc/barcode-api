@@ -1,4 +1,4 @@
-import { Event, Prisma } from "@prisma/client";
+import { Event } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class EventEntity implements Event {
