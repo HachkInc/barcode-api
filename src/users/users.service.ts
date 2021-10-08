@@ -2,8 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { PrismaService } from "../prisma/prisma.service";
-import { User } from "@prisma/client";
-import { PrismaModule } from "../prisma/prisma.module";
+import { User, Event } from "@prisma/client";
 import { Pagination } from "../pagination/pagination";
 
 @Injectable()
@@ -19,23 +18,35 @@ export class UsersService {
     return this.prisma.user.findMany();
   }
 
+  getEvents(id: number): Promise<Event[]> {
+    return this.prisma.event.findMany({
+      where: {
+        users: {
+          some: {
+            userId: id
+          }
+        }
+      }
+    });
+  }
+
   async findAllWithPagination(params: {
     page: number
     limit: number
   }): Promise<Pagination<User>> {
-    const { page, limit } = params
+    const { page, limit } = params;
 
     const users = await this.prisma.user.findMany({
       skip: (page - 1) * limit,
-      take: limit,
-    })
+      take: limit
+    });
 
     return {
       page,
       limit,
       count: users.length,
-      results: users,
-    }
+      results: users
+    };
   }
 
   findOne(id: number): Promise<User> {

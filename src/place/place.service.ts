@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePlaceDto } from './dto/create-place.dto';
-import { UpdatePlaceDto } from './dto/update-place.dto';
+import { Get, Injectable, Param } from "@nestjs/common";
+import { CreatePlaceDto } from "./dto/create-place.dto";
+import { UpdatePlaceDto } from "./dto/update-place.dto";
 import { PrismaService } from "../prisma/prisma.service";
-import { Place } from "@prisma/client";
+import { Event, Place } from "@prisma/client";
 import { Pagination } from "../pagination/pagination";
+import { ApiOkResponse } from "@nestjs/swagger";
+import { EventEntity } from "../events/entities/event.entity";
 
 @Injectable()
 export class PlaceService {
@@ -14,6 +16,14 @@ export class PlaceService {
     return this.prisma.place.create({ data: place });
   }
 
+  getEvents(id: number): Promise<Event[]> {
+    return this.prisma.event.findMany({
+      where: {
+        placeId: id
+      }
+    });
+  }
+
   findAll(): Promise<Place[]> {
     return this.prisma.place.findMany();
   }
@@ -22,19 +32,19 @@ export class PlaceService {
     page: number
     limit: number
   }): Promise<Pagination<Place>> {
-    const { page, limit } = params
+    const { page, limit } = params;
 
     const places = await this.prisma.place.findMany({
       skip: (page - 1) * limit,
-      take: limit,
-    })
+      take: limit
+    });
 
     return {
       page,
       limit,
       count: places.length,
-      results: places,
-    }
+      results: places
+    };
   }
 
   findOne(id: number): Promise<Place> {

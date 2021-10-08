@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 
 import { CreateEventDto } from "./dto/create-event.dto";
 import { UpdateEventDto } from "./dto/update-event.dto";
-import { Event } from "@prisma/client";
+import { Event, User } from "@prisma/client";
 import { PrismaService } from "../prisma/prisma.service";
 import { Pagination } from "../pagination/pagination";
 
@@ -46,6 +46,18 @@ export class EventsService {
     return this.prisma.event.update({
       where: { id },
       data: event
+    });
+  }
+
+  getUsers (id: number): Promise<User[]> {
+    return this.prisma.user.findMany({
+      where: {
+        events: {
+          some: {
+            eventId: id
+          }
+        }
+      }
     });
   }
 

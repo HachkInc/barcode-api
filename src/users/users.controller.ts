@@ -15,7 +15,7 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { ApiCreatedResponse, ApiExtraModels, ApiOkResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UserEntity } from "./entities/user.entity";
-import { User } from "@prisma/client";
+import { Event, User } from "@prisma/client";
 import { PAGE_SIZE } from "../constants/pagination";
 import { Pagination } from "../pagination/pagination";
 
@@ -37,10 +37,10 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  // TODO
   @Get('/:id/events')
-  async getEvents(@Param("id") id: string) {
-    return `events by id: ${id}`;
+  @ApiOkResponse({ type: [UserEntity] })
+  async getEvents(@Param("id") id: string): Promise<Event[]> {
+    return this.usersService.getEvents(+id);
   }
 
   @Get()

@@ -10,7 +10,7 @@ import {
   DefaultValuePipe,
   ParseIntPipe, NotFoundException
 } from "@nestjs/common";
-import { Event } from "@prisma/client";
+import { Event, User } from "@prisma/client";
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
@@ -66,6 +66,12 @@ export class EventsController {
       return res;
     }
     throw new NotFoundException();
+  }
+
+  @Get('/:id/users')
+  @ApiOkResponse({ type: [UserEntity] })
+  async getEvents(@Param("id") id: string): Promise<User[]> {
+    return this.eventsService.getUsers(+id);
   }
 
   @Delete(":id")

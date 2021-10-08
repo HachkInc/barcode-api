@@ -11,7 +11,7 @@ import {
   ParseIntPipe, NotFoundException
 } from "@nestjs/common";
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
-import { Place } from "@prisma/client";
+import { Event, Place } from "@prisma/client";
 
 import { PAGE_SIZE } from "../constants/pagination";
 import { Pagination } from "../pagination/pagination";
@@ -19,6 +19,7 @@ import { PlaceService } from "./place.service";
 import { CreatePlaceDto } from "./dto/create-place.dto";
 import { PlaceEntity } from "./entities/place.entity";
 import { UpdatePlaceDto } from "./dto/update-place.dto";
+import { EventEntity } from "../events/entities/event.entity";
 
 @Controller("place")
 @ApiTags("place")
@@ -36,6 +37,12 @@ export class PlaceController {
   @ApiOkResponse({ type: [PlaceEntity] })
   async findAll(): Promise<Place[]> {
     return this.placeService.findAll();
+  }
+
+  @Get("/:id/events")
+  @ApiOkResponse({ type: [EventEntity] })
+  async getEvents(@Param("id") id: string): Promise<Event[]> {
+    return this.placeService.getEvents(+id);
   }
 
   @Get()
