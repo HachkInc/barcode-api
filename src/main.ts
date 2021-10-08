@@ -15,10 +15,11 @@ const start = async () => {
     app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
     const config = new DocumentBuilder()
-      .setTitle("DB Api")
+      .setTitle("DB API")
       .setDescription("REST API")
-      .setVersion("1.0")
+      .setVersion("0.0.1")
       .build();
+
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup("api", app, document, { customSiteTitle: "Prisma Day" });
 
