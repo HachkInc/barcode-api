@@ -11,6 +11,14 @@ export class CreateUserDto {
   @ApiProperty()
   email: string;
 
+  @IsNotEmpty()
+  @ApiProperty()
+  telegramId: string;
+
+  @IsNotEmpty()
+  @ApiProperty()
+  phone: string;
+
   @IsOptional()
   @MinLength(3)
   @ApiProperty({ required: false })
@@ -24,14 +32,6 @@ export class CreateUserDto {
   @IsOptional()
   @ApiProperty({ required: false, default: true })
   dateOfBirth?: Date = new Date();
-
-  @IsNotEmpty()
-  @ApiProperty()
-  telegramId: string;
-
-  @IsNotEmpty()
-  @ApiProperty()
-  phone: string;
 
   @IsOptional()
   @ApiProperty({ required: false })

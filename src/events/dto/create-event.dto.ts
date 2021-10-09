@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, MaxLength, MinLength } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateEventDto {
@@ -15,8 +15,6 @@ export class CreateEventDto {
   ticketsAmount?: number;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({required: false, nullable: true})
   placeId: number;
-
-  // Todo users: User[]
 }

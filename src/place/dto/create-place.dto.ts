@@ -6,6 +6,4 @@ export class CreatePlaceDto {
   @MinLength(3)
   @ApiProperty({ required: false })
   name: string;
-
-  // TODO events: Event[]
 }

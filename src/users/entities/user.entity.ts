@@ -2,38 +2,36 @@ import { User } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class UserEntity implements User {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   id: number;
-
-  @ApiProperty()
-  createdAt: Date;
-
-  @ApiProperty()
-  updatedAt: Date;
-
-  @ApiProperty()
-  phone: string;
-
-  @ApiProperty()
-  telegramId: string;
-
-  @ApiProperty({ required: false, nullable: true })
-  qr: string | null;
-
-  @ApiProperty({ required: false, nullable: true })
-  dateOfBirth: Date | null;
-
-  @ApiProperty({ required: false, nullable: true })
-  name: string | null;
 
   @ApiProperty()
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
+  telegramId: string;
+
+  @ApiProperty({ required: true })
+  phone: string;
+
+  @ApiProperty({ required: false, nullable: true })
+  name: string | null;
+
+  @ApiProperty({ required: false })
   surname: string;
 
-  // TODO
-  // events: Event[]
+  @ApiProperty({ required: false, nullable: true })
+  dateOfBirth: Date | null;
+
+
+  @ApiProperty({ required: false, nullable: true })
+  qr: string | null;
+
+  @ApiProperty({ required: false })
+  createdAt: Date;
+
+  @ApiProperty({ required: false })
+  updatedAt: Date;
 
   constructor(partial: Partial<UserEntity>) {
     Object.assign(this, partial);

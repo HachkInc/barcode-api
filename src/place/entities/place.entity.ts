@@ -1,22 +1,18 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Place, Prisma } from "@prisma/client";
+import { Place } from "@prisma/client";
 
 export class PlaceEntity implements Place {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   id: number;
 
-  @ApiProperty()
-  createdAt: Date;
-
-  @ApiProperty()
-  updatedAt: Date;
-
-  @ApiProperty()
+  @ApiProperty({ required: true })
   name: string;
 
-  // TODO
-  // @ApiProperty()
-  // events: string;
+  @ApiProperty({ required: false })
+  createdAt: Date;
+
+  @ApiProperty({ required: false })
+  updatedAt: Date;
 
   constructor(partial: Partial<PlaceEntity>) {
     Object.assign(this, partial);

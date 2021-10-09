@@ -8,9 +8,9 @@ export class EventsOnUsersEntity implements EventsOnUsers {
   @ApiProperty({ required: true, nullable: false })
   eventId: number;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   createdAt: Date;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   updatedAt: Date;
 }

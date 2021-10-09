@@ -8,7 +8,8 @@ import {
   Delete,
   Query,
   DefaultValuePipe,
-  ParseIntPipe, NotFoundException
+  ParseIntPipe,
+  NotFoundException
 } from "@nestjs/common";
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Event, Place } from "@prisma/client";
@@ -77,7 +78,7 @@ export class PlaceController {
   }
 
   @Delete(":id")
-  @ApiOkResponse({ type: PlaceEntity })
+  @ApiOkResponse({ type: null })
   async remove(@Param("id") id: string): Promise<null> {
     const res = await this.placeService.remove(+id);
     if (res) {
