@@ -17,7 +17,7 @@ const start = async () => {
     const config = new DocumentBuilder()
       .setTitle("DB API")
       .setDescription("REST API")
-      .setVersion("0.0.1")
+      .setVersion("0.1.0")
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
