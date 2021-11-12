@@ -10,12 +10,10 @@ datasource db {
 
 model User {
   id            Int              @id @default(autoincrement())
-  email         String           @unique
   name          String?
-  surname       String?
-  dateOfBirth   DateTime?
   telegramId    String           @unique
   phone         String           @unique
+  age           Int?
   qr            String?
   events        EventsOnUsers[]
 

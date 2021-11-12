@@ -20,7 +20,6 @@ import { PAGE_SIZE } from "../constants/pagination";
 import { Pagination } from "../pagination/pagination";
 
 @Controller("users")
-@ApiTags("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {
   }

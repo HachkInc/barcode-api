@@ -5,6 +5,9 @@ export class UserEntity implements User {
   @ApiProperty({ required: false })
   id: number;
 
+  @ApiProperty({required: false})
+  age: number;
+
   @ApiProperty()
   email: string;
 
