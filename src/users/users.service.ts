@@ -49,8 +49,8 @@ export class UsersService {
     };
   }
 
-  findOne(id: number): Promise<User> {
-    return this.prisma.user.findUnique({ where: { id: id } });
+  findOne(id: string): Promise<User> {
+    return this.prisma.user.findUnique({ where: { telegramId: id } });
   }
 
   update(id: number, user: UpdateUserDto): Promise<User> {
