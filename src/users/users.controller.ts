@@ -1,23 +1,22 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
+  DefaultValuePipe,
   Delete,
-  Query,
+  Get,
   NotFoundException,
-  DefaultValuePipe, ParseIntPipe
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query
 } from "@nestjs/common";
-import { UsersService } from "./users.service";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
-import { ApiCreatedResponse, ApiExtraModels, ApiOkResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { UserEntity } from "./entities/user.entity";
-import { Event, User } from "@prisma/client";
-import { PAGE_SIZE } from "../constants/pagination";
-import { Pagination } from "../pagination/pagination";
+import {UsersService} from "./users.service";
+import {ApiCreatedResponse, ApiOkResponse} from "@nestjs/swagger";
+import {UserEntity} from "./entities/user.entity";
+import {Event, User} from "@prisma/client";
+import {PAGE_SIZE} from "../constants/pagination";
+import {Pagination} from "../pagination/pagination";
 
 @Controller("users")
 export class UsersController {
@@ -25,7 +24,7 @@ export class UsersController {
   }
 
   @Post()
-  async create(@Body() user: any): Promise<User> {
+  async create(@Body() user: UserEntity): Promise<User> {
     return this.usersService.create(user)
   }
 
@@ -55,15 +54,19 @@ export class UsersController {
 
   @Get(":id")
   @ApiOkResponse({ type: UserEntity })
-  async findOne(@Param("id") id: string): Promise<User> {
-    return this.usersService.findOne(id);
+  async findOne(@Param("id") id: string): Promise<User | any> {
+    const user = await this.usersService.findOne(id);
+    if (user === null) {
+      return {exist: false}
+    }
+    return {user, exist: true};
   }
 
   @Patch(":id")
   @ApiCreatedResponse({ type: UserEntity })
   async update(
     @Param("id") id: string,
-    @Body() user: UpdateUserDto
+    @Body() user: UserEntity
   ): Promise<User> {
     const res = this.usersService.update(+id, user);
     if (res) {

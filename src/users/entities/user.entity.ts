@@ -8,9 +8,6 @@ export class UserEntity implements User {
   @ApiProperty({required: false})
   age: number;
 
-  @ApiProperty()
-  email: string;
-
   @ApiProperty({ required: true })
   telegramId: string;
 
@@ -19,13 +16,6 @@ export class UserEntity implements User {
 
   @ApiProperty({ required: false, nullable: true })
   name: string | null;
-
-  @ApiProperty({ required: false })
-  surname: string;
-
-  @ApiProperty({ required: false, nullable: true })
-  dateOfBirth: Date | null;
-
 
   @ApiProperty({ required: false, nullable: true })
   qr: string | null;
