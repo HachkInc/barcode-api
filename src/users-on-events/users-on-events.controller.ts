@@ -3,7 +3,7 @@ import {
   Get,
   Query,
   DefaultValuePipe,
-  ParseIntPipe,
+  ParseIntPipe, Post, Body, Delete
 } from "@nestjs/common";
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { EventsOnUsers } from "@prisma/client";
@@ -12,6 +12,7 @@ import { UsersOnEventsService } from './users-on-events.service';
 import { PAGE_SIZE } from "../constants/pagination";
 import { Pagination } from "../pagination/pagination";
 import { EventsOnUsersEntity } from "./entities/users-on-event.entity";
+import { UserEntity } from "../users/entities/user.entity";
 
 @Controller('users-on-events')
 @ApiTags('users-on-events')
@@ -34,4 +35,17 @@ export class UsersOnEventsController {
   ): Promise<Pagination<EventsOnUsers>> {
     return this.usersOnEventsService.findAllWithPagination({ page, limit })
   }
+
+  @Post()
+  @ApiOkResponse({ type: EventsOnUsersEntity })
+  async create(@Query('userId') userId: number, @Query('eventId') eventId: number): Promise<EventsOnUsers | null> {
+    return this.usersOnEventsService.create(+userId, +eventId);
+  }
+
+  @Delete()
+  @ApiOkResponse({ type: EventsOnUsersEntity })
+  async remove(@Query('userId') userId: number, @Query('eventId') eventId: number): Promise<any> {
+    return this.usersOnEventsService.remove(+userId, +eventId);
+  }
+
 }

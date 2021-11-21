@@ -4,8 +4,6 @@ import { UpdatePlaceDto } from "./dto/update-place.dto";
 import { PrismaService } from "../prisma/prisma.service";
 import { Event, Place } from "@prisma/client";
 import { Pagination } from "../pagination/pagination";
-import { ApiOkResponse } from "@nestjs/swagger";
-import { EventEntity } from "../events/entities/event.entity";
 
 @Injectable()
 export class PlaceService {

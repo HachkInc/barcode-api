@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { Event, EventsOnUsers } from "@prisma/client";
 import { Pagination } from "../pagination/pagination";
@@ -29,5 +29,18 @@ export class UsersOnEventsService {
       count: eventsOnUsers.length,
       results: eventsOnUsers
     };
+  }
+
+  async create(userId: number, eventId: number): Promise<EventsOnUsers> {
+    const response = await this.prisma.eventsOnUsers.create({ data: { userId, eventId } });
+    return response;
+    // TODO check if exist
+  }
+
+  async remove(userId: number, eventId: number): Promise<any> {
+    const response = await this.prisma.eventsOnUsers.delete({
+      where: { userId_eventId: { userId, eventId } }
+    });
+    return response;
   }
 }
